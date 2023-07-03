@@ -47,12 +47,12 @@ void idprogram()
     cout << endl;
 }
 
-void tabel(string keterangan, int baris)
+void tabel(string judul, int baris)
 {
     idprogram();
-    cout << keterangan << endl;
+    cout << judul << endl;
     cout << "======================================================\n";
-    cout << "| Kode Buku | Nama Buku       | Stok  | Harga Satuan |\n";
+    cout << "| Kode Buku | Judul Buku      | Stok  | Harga Satuan |\n";
     cout << "======================================================\n";
 
     for (int i = 0; i < baris; i++)
