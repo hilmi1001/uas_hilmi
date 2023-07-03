@@ -1,4 +1,3 @@
-
 /*
 Nama	: Hilmi Firdaus Abdillah
 Kelas   : 2E
@@ -340,11 +339,11 @@ void transaksi()
     cin >> bayar;
     while (bayar < tb)
     {
-        gotoxy(68, 20);
+        gotoxy(68, 21);
         cout << "           ";
         gotoxy(43, 4);
         cout << "Uang bayar kurang. Silahkan coba lagi";
-        gotoxy(68, 20);
+        gotoxy(68, 21);
         cin >> bayar;
     }
     gotoxy(43, 4);
