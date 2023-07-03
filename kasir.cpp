@@ -1,3 +1,4 @@
+
 /*
 Nama	: Hilmi Firdaus Abdillah
 Kelas   : 2E
@@ -5,6 +6,7 @@ Nim     : 22041087
 */
 
 #include <iostream>
+#include <conio.h>
 #include <windows.h>
 
 using namespace std;
@@ -22,8 +24,9 @@ struct tipe
     buku lama;
     buku baru;
 };
+
 tipe listbuku[100];
-int i, n, kode, pilihan, idx, idx2, jumlah, bayar, kembalian;
+int i, n, kode, pilihan, idx, idx2, jumlah;
 string nama, nim, kelas;
 char jawab;
 
@@ -214,15 +217,15 @@ void transaksi()
         cout << "|               |";
         gotoxy(0, 18);
         cout << "--------------------------------------------------------------------------------\n";
-        cout << "|                                                        TOTAL |               |\n";
+        cout << "|                                                     DISCOUNT |               |\n";
+        cout << "|                                                TOTAL BELANJA |               |\n";
         cout << "|                                                        BAYAR |               |\n";
         cout << "|                                                      KEMBALI |               |\n";
         cout << "--------------------------------------------------------------------------------\n";
     }
 
     bool lanjut = true;
-    int i = 0;
-    int total = 0;
+    int b = 0, total = 0, discount = 0, jumlah, bayar;
 
     while (lanjut)
     {
@@ -230,7 +233,7 @@ void transaksi()
 
         while (!ditemukan)
         {
-            gotoxy(2, 8 + i);
+            gotoxy(2, 8 + b);
             cin >> kode;
 
             idx = cari(1);
@@ -247,7 +250,7 @@ void transaksi()
                 cin >> jawab;
                 gotoxy(44, 4);
                 cout << "                                     ";
-                gotoxy(2, 8 + i);
+                gotoxy(2, 8 + b);
                 cout << "          ";
                 if (jawab != 'Y' && jawab != 'y')
                 {
@@ -262,13 +265,13 @@ void transaksi()
             break;
         }
 
-        gotoxy(14, 8 + i);
+        gotoxy(14, 8 + b);
         cout << listbuku[idx].lama.judul;
-        gotoxy(32, 8 + i);
+        gotoxy(32, 8 + b);
         cout << listbuku[idx].lama.stok;
-        gotoxy(40, 8 + i);
+        gotoxy(40, 8 + b);
         cout << "Rp " << listbuku[idx].lama.harga;
-        gotoxy(55, 8 + i);
+        gotoxy(55, 8 + b);
         cin >> jumlah;
 
         while (jumlah > listbuku[idx].lama.stok)
@@ -278,16 +281,16 @@ void transaksi()
             cin >> jawab;
             gotoxy(47, 4);
             cout << "                                 ";
-            gotoxy(55, 8 + i);
+            gotoxy(55, 8 + b);
             cout << "        ";
             if (jawab != 'Y' && jawab != 'y')
             {
-                gotoxy(0, 8 + i);
+                gotoxy(0, 8 + b);
                 cout << "|           |                 |       |              |";
                 lanjut = false;
                 break;
             }
-            gotoxy(55, 8 + i);
+            gotoxy(55, 8 + b);
             cin >> jumlah;
         }
 
@@ -297,10 +300,10 @@ void transaksi()
         }
 
         int ttl = listbuku[idx].lama.harga * jumlah;
-        gotoxy(65, 8 + i);
-        cout << "Rp " << ttl;
-        i++;
         total += ttl;
+        gotoxy(65, 8 + b);
+        cout << "Rp " << ttl;
+        b++;
         listbuku[idx].lama.stok -= jumlah;
         listbuku[idx2].baru.stok -= jumlah;
 
@@ -315,12 +318,27 @@ void transaksi()
         }
     }
 
+    if (total > 100000 || total < 500000)
+    {
+        discount = 0.10 * total;
+    }
+    if (total > 500000)
+    {
+        discount = 0.20 * total;
+    }
+    else
+    {
+        discount = 0;
+    }
+    int tb = total - discount;
     gotoxy(65, 19);
-    cout << "Rp " << total;
+    cout << "Rp " << discount;
     gotoxy(65, 20);
+    cout << "Rp " << tb;
+    gotoxy(65, 21);
     cout << "Rp ";
     cin >> bayar;
-    while (bayar < total)
+    while (bayar < tb)
     {
         gotoxy(68, 20);
         cout << "           ";
@@ -331,11 +349,10 @@ void transaksi()
     }
     gotoxy(43, 4);
     cout << "                                     ";
-    kembalian = bayar - total;
-    gotoxy(65, 21);
+    int kembalian = bayar - tb;
+    gotoxy(65, 22);
     cout << "Rp " << kembalian;
-    cout << endl
-         << endl;
+    cout << endl << endl;
 }
 
 void menu()
@@ -353,11 +370,11 @@ void menu()
 int main()
 {
     idprogram();
-    cout << "Nama : ";
+    cout << "Nama	: ";
     getline(cin, nama);
-    cout << "NIM  : ";
+    cout << "NIM	: ";
     cin >> nim;
-    cout << "Kelas: ";
+    cout << "Kelas	: ";
     cin >> kelas;
 
     do
@@ -372,26 +389,26 @@ int main()
             break;
         case 2:
             tampil();
-            system("pause");
+            getch();
             break;
         case 3:
             sorting();
-            system("pause");
+            getch();
             break;
         case 4:
             transaksi();
-            system("pause");
+            getch();
             break;
         case 5:
             idprogram();
-            cout << "Nama : " << nama << endl;
-            cout << "NIM  : " << nim << endl;
-            cout << "Kelas: " << kelas << endl;
+            cout << "Nama	: " << nama << endl;
+            cout << "NIM	: " << nim << endl;
+            cout << "Kelas	: " << kelas << endl;
             cout << "Terima kasih.\n";
             break;
         default:
             cout << "Pilihan tidak valid. Silakan coba lagi.\n";
-            system("pause");
+            getch();
             break;
         }
     } while (pilihan != 5);
